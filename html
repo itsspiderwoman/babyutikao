@@ -1,0 +1,739 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f8f3ea">
+<title>Welcome, Little One | March 2027</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;500;600&display=swap');
+
+:root {
+  --cream: #f8f3ea;
+  --white: #fffdf8;
+  --gold: #b79a68;
+  --gold-dark: #967544;
+  --blue: #dcebf2;
+  --blue-dark: #42687c;
+  --text: #665747;
+  --muted: #857766;
+  --border: #e7dac5;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 22px 14px;
+  display: grid;
+  place-items: center;
+  color: var(--text);
+  background: linear-gradient(145deg, #faf6ef, #eee4d5);
+  font-family: "DM Sans", Arial, sans-serif;
+}
+
+.page {
+  width: 100%;
+  max-width: 740px;
+  padding: clamp(30px, 7vw, 65px) 24px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  background: var(--white);
+  border: 1px solid #d9c5a1;
+  border-radius: 22px;
+  box-shadow: 0 18px 55px #66574716;
+  animation: fadeIn .7s ease;
+}
+
+.page::before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px solid #b79a683d;
+  border-radius: 15px;
+  pointer-events: none;
+}
+
+h1, h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 8vw, 4.8rem);
+  margin: 18px 0;
+}
+
+h1 span { color: var(--gold-dark); }
+
+h2 {
+  font-size: clamp(2.3rem, 8vw, 4rem);
+  color: var(--blue-dark);
+  margin: 15px 0;
+}
+
+h3 {
+  color: var(--gold-dark);
+  font-size: .85rem;
+  letter-spacing: .17em;
+}
+
+.eyebrow {
+  color: var(--gold-dark);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .17em;
+}
+
+.stars {
+  color: var(--gold);
+  font-size: 23px;
+  margin-bottom: 28px;
+}
+
+.verse {
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  margin-top: 30px;
+}
+
+.reference {
+  color: var(--gold-dark);
+  font-size: .75rem;
+  letter-spacing: .12em;
+}
+
+.gold-line {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 25px auto;
+}
+
+.description {
+  max-width: 500px;
+  margin: 20px auto;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.button {
+  display: inline-block;
+  border: 0;
+  border-radius: 30px;
+  padding: 14px 22px;
+  font-family: inherit;
+  font-size: .9rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px #66574720;
+}
+
+.gold-button {
+  color: white;
+  background: var(--gold-dark);
+}
+
+.blue-button {
+  color: white;
+  background: var(--blue-dark);
+  margin-top: 16px;
+}
+
+.outline-button {
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--border);
+}
+
+.footer {
+  margin-top: 32px;
+  color: #a09483;
+  font-size: .75rem;
+}
+
+.back-link {
+  display: block;
+  text-align: left;
+  margin-bottom: 28px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: .85rem;
+}
+
+.guess-buttons, .puzzle-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.guess {
+  padding: 12px 20px;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background: #fffaf2;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.guess.selected {
+  background: var(--blue);
+  border-color: #8fb3c4;
+}
+
+.message {
+  color: var(--muted);
+  font-size: .9rem;
+  min-height: 24px;
+}
+
+.balloon-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 25px auto;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.balloon {
+  width: 125px;
+  height: 150px;
+  display: grid;
+  place-items: center;
+  border-radius: 50% 50% 45% 45%;
+  color: white;
+  font: 3.5rem "Playfair Display", Georgia, serif;
+  background: radial-gradient(circle at 30% 25%, #f7e8c8, #c4a66e 65%, #967544);
+  box-shadow: inset -8px -8px 15px #66574720, 0 12px 25px #96754425;
+  animation: float 2.5s ease-in-out infinite;
+}
+
+.balloon-string {
+  height: 35px;
+  width: 1px;
+  background: var(--gold);
+}
+
+.tap-hint {
+  font-size: .7rem;
+  letter-spacing: .15em;
+  color: var(--gold-dark);
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.balloon-area.popped .balloon {
+  animation: pop .35s forwards;
+}
+
+.result {
+  margin-top: 30px;
+  animation: reveal .7s ease both;
+}
+
+.hidden { display: none !important; }
+
+.celebration {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+.puzzle {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 25px auto;
+}
+
+.tile {
+  width: 55px;
+  height: 62px;
+  border: 1px solid #d6c29d;
+  border-radius: 12px;
+  color: var(--text);
+  background: linear-gradient(145deg, #fffdf8, #f0e5d1);
+  font: 1.7rem "Playfair Display", Georgia, serif;
+  box-shadow: 0 5px 12px #66574710;
+  cursor: pointer;
+  transition: transform .2s, background .2s;
+}
+
+.tile:hover { transform: translateY(-3px); }
+
+.tile.selected {
+  background: var(--blue);
+  border-color: #8fb3c4;
+  transform: translateY(-5px);
+}
+
+.baby-name {
+  overflow-wrap: anywhere;
+  letter-spacing: .06em;
+}
+
+blockquote {
+  max-width: 430px;
+  margin: 25px auto 10px;
+  font: italic 1.1rem/1.7 "Playfair Display", Georgia, serif;
+}
+
+#confetti {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  width: 9px;
+  height: 14px;
+  border-radius: 2px;
+  animation: fall 3s linear forwards;
+}
+
+.sound-control {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  z-index: 5;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background: var(--white);
+  color: var(--text);
+  padding: 10px 13px;
+  font: 500 .78rem "DM Sans", Arial, sans-serif;
+  cursor: pointer;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); opacity: 1; }
+  60% { transform: scale(1.3); opacity: .7; }
+  100% { transform: scale(.05); opacity: 0; }
+}
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(18px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(760deg); opacity: .9; }
+}
+
+@media (max-width: 480px) {
+  body { padding: 12px; }
+  .page { padding: 35px 20px; }
+  .tile { width: 48px; height: 55px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<main class="page" id="app"></main>
+<div id="confetti" aria-hidden="true"></div>
+
+<button class="sound-control" id="sound-toggle" type="button">
+  🔇 Sound: Off
+</button>
+
+<script>
+const app = document.getElementById("app");
+const confettiLayer = document.getElementById("confetti");
+const soundToggle = document.getElementById("sound-toggle");
+
+let soundEnabled = false;
+let audioContext;
+
+function playTone(frequency = 700, duration = 0.13) {
+  if (!soundEnabled) return;
+
+  try {
+    const AudioContextClass =
+      window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) return;
+
+    audioContext = audioContext || new AudioContextClass();
+
+    if (audioContext.state === "suspended") {
+      audioContext.resume();
+    }
+
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = frequency;
+
+    gain.gain.setValueAtTime(0.001, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(
+      0.08, audioContext.currentTime + 0.02
+    );
+    gain.gain.exponentialRampToValueAtTime(
+      0.001, audioContext.currentTime + duration
+    );
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + duration + 0.03);
+  } catch (error) {
+    // Audio is optional; the website still works without it.
+  }
+}
+
+soundToggle.addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
+  soundToggle.textContent = soundEnabled
+    ? "🔊 Sound: On"
+    : "🔇 Sound: Off";
+
+  if (soundEnabled) playTone(750, 0.15);
+});
+
+function celebrate() {
+  const colors = [
+    "#b79a68", "#dcebf2", "#e8c9ce",
+    "#fffdf8", "#9fc3d4", "#d8b6df"
+  ];
+
+  for (let i = 0; i < 100; i++) {
+    const piece = document.createElement("span");
+    piece.className = "confetti-piece";
+    piece.style.left = Math.random() * 100 + "%";
+    piece.style.backgroundColor =
+      colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = Math.random() * 0.8 + "s";
+    piece.style.animationDuration = 2 + Math.random() * 2 + "s";
+    confettiLayer.appendChild(piece);
+
+    setTimeout(() => piece.remove(), 4800);
+  }
+}
+
+function coverPage() {
+  app.innerHTML = `
+    <div class="stars">✦　☁　✦　☾　✦</div>
+    <p class="eyebrow">A LITTLE BLESSING IS ON THE WAY</p>
+    <h1>Welcome,<br><span>Little One</span></h1>
+    <p class="verse">“Children are an heritage of the LORD.”</p>
+    <p class="reference">PSALM 127:3</p>
+    <div class="gold-line"></div>
+    <h3>ARRIVING MARCH 2027</h3>
+    <p class="description">
+      A little life, a lifetime of love,
+      and a beautiful surprise waiting to be revealed.
+    </p>
+    <button class="button gold-button" id="start-gender">
+      Tap to Reveal Baby's Gender ♡
+    </button>
+    <p class="footer">Made with love, faith & gratitude</p>
+  `;
+
+  document.getElementById("start-gender").onclick = genderPage;
+}
+
+function genderPage() {
+  playTone(650);
+  app.innerHTML = `
+    <a class="back-link" href="#" id="back-cover">← Back to cover</a>
+    <p class="eyebrow">THE FIRST BIG SURPRISE</p>
+    <h1>Boy or Girl?</h1>
+    <p class="description">
+      Make your guess, then pop the mystery balloon to find out!
+    </p>
+
+    <div class="guess-buttons">
+      <button class="guess" data-guess="girl">🎀 I guess Girl</button>
+      <button class="guess" data-guess="boy">🩵 I guess Boy</button>
+    </div>
+
+    <p id="guess-message" class="message">
+      Who do you think is on the way?
+    </p>
+
+    <button class="balloon-area" id="balloon" aria-label="Pop the mystery balloon">
+      <span class="balloon">?</span>
+      <span class="balloon-string"></span>
+      <span class="tap-hint">TAP TO POP!</span>
+    </button>
+
+    <section id="gender-result" class="result hidden">
+      <div class="celebration">🎉 🩵 🎉</div>
+      <p class="eyebrow">OUR PRECIOUS BLESSING</p>
+      <h2>IT'S A BOY!</h2>
+      <p class="description">Our little prince is on the way! 💙</p>
+      <button class="button blue-button" id="go-name">
+        Discover His Name 🎁
+      </button>
+    </section>
+
+    <p class="footer">Arriving March 2027</p>
+  `;
+
+  document.getElementById("back-cover").onclick = (event) => {
+    event.preventDefault();
+    coverPage();
+  };
+
+  let guess = "";
+  let revealed = false;
+
+  document.querySelectorAll("[data-guess]").forEach(button => {
+    button.onclick = () => {
+      if (revealed) return;
+
+      guess = button.dataset.guess;
+
+      document.querySelectorAll("[data-guess]").forEach(item =>
+        item.classList.remove("selected")
+      );
+
+      button.classList.add("selected");
+
+      document.getElementById("guess-message").textContent =
+        guess === "boy"
+          ? "You've guessed boy! Let's see if you're right…"
+          : "You've guessed girl! Let's see the surprise…";
+
+      playTone(520);
+    };
+  });
+
+  document.getElementById("balloon").onclick = () => {
+    if (revealed) return;
+    revealed = true;
+
+    const balloon = document.getElementById("balloon");
+    balloon.classList.add("popped");
+    playTone(880, 0.2);
+
+    setTimeout(() => {
+      balloon.classList.add("hidden");
+
+      const result = document.getElementById("gender-result");
+      result.classList.remove("hidden");
+
+      document.getElementById("guess-message").textContent =
+        guess === "boy"
+          ? "You guessed right! 💙"
+          : guess === "girl"
+            ? "Surprise! It's a boy! 💙"
+            : "The big surprise is here!";
+
+      celebrate();
+      playTone(1050, 0.2);
+      setTimeout(() => playTone(1300, 0.25), 150);
+
+      document.getElementById("go-name").onclick = namePage;
+    }, 380);
+  };
+}
+
+function namePage() {
+  playTone(700);
+
+  app.innerHTML = `
+    <a class="back-link" href="#" id="back-gender">← Back to gender reveal</a>
+    <p class="eyebrow">ONE LAST LITTLE SURPRISE</p>
+    <h1>Can You Solve His Name?</h1>
+    <p class="description">
+      Rearrange the letters to discover the name
+      chosen with so much love.
+    </p>
+
+    <p class="hint">
+      Hint: His first name has five letters.
+      Tap two letters to swap them.
+    </p>
+
+    <div id="puzzle" class="puzzle"></div>
+    <p id="puzzle-message" class="message" aria-live="polite">
+      Let's discover his name!
+    </p>
+
+    <div class="puzzle-buttons">
+      <button id="check" class="button gold-button">Check My Answer</button>
+      <button id="shuffle" class="button outline-button">Shuffle Again</button>
+    </div>
+
+    <section id="name-result" class="result hidden">
+      <div class="celebration">✨ 🧸 ✨</div>
+      <p class="eyebrow">MEET OUR LITTLE BLESSING</p>
+      <h2 class="baby-name">AMARI HARRY</h2>
+      <p class="description">
+        A name chosen with love, hope,
+        and prayers for a beautiful future.
+      </p>
+      <blockquote>
+        “Every good gift and every perfect gift is from above.”
+      </blockquote>
+      <p class="reference">JAMES 1:17</p>
+      <button class="button blue-button" id="back-home">
+        Back to the Beginning ♡
+      </button>
+    </section>
+
+    <p class="footer">Our little blessing, our forever love.</p>
+  `;
+
+  document.getElementById("back-gender").onclick = event => {
+    event.preventDefault();
+    genderPage();
+  };
+
+  const puzzle = document.getElementById("puzzle");
+  const message = document.getElementById("puzzle-message");
+  const checkButton = document.getElementById("check");
+  const shuffleButton = document.getElementById("shuffle");
+  const nameResult = document.getElementById("name-result");
+
+  const answer = ["A", "M", "A", "R", "I"];
+  let letters = [];
+  let selected = null;
+  let solved = false;
+
+  function shuffleLetters() {
+    let shuffled = [...answer];
+
+    // Fisher-Yates shuffle; repeat if it accidentally spells AMARI.
+    do {
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+    } while (shuffled.join("") === answer.join(""));
+
+    return shuffled;
+  }
+
+  function renderPuzzle() {
+    puzzle.innerHTML = "";
+
+    letters.forEach((letter, index) => {
+      const tile = document.createElement("button");
+      tile.type = "button";
+      tile.className = "tile" + (selected === index ? " selected" : "");
+      tile.textContent = letter;
+      tile.setAttribute("aria-label", "Letter " + letter);
+
+      tile.onclick = () => {
+        if (solved) return;
+
+        playTone(550);
+
+        if (selected === null) {
+          selected = index;
+          message.textContent = "Now tap another letter to swap them.";
+        } else if (selected === index) {
+          selected = null;
+          message.textContent = "Choose two letters to swap.";
+        } else {
+          [letters[selected], letters[index]] =
+            [letters[index], letters[selected]];
+
+          selected = null;
+          message.textContent = "Nice! Keep going, then check your answer.";
+        }
+
+        renderPuzzle();
+      };
+
+      puzzle.appendChild(tile);
+    });
+  }
+
+  function shufflePuzzle() {
+    solved = false;
+    selected = null;
+    letters = shuffleLetters();
+
+    nameResult.classList.add("hidden");
+    checkButton.classList.remove("hidden");
+    shuffleButton.classList.remove("hidden");
+
+    message.textContent = "Hint: His first name has 5 letters.";
+    renderPuzzle();
+  }
+
+  checkButton.onclick = () => {
+    if (letters.join("") === answer.join("")) {
+      solved = true;
+      selected = null;
+      renderPuzzle();
+
+      message.textContent = "You solved it! ✨";
+      nameResult.classList.remove("hidden");
+      checkButton.classList.add("hidden");
+      shuffleButton.classList.add("hidden");
+
+      celebrate();
+      playTone(880, 0.15);
+      setTimeout(() => playTone(1100, 0.18), 140);
+      setTimeout(() => playTone(1320, 0.23), 280);
+    } else {
+      message.textContent =
+        "Not quite yet! Swap a few letters and try again. 💛";
+      playTone(280);
+    }
+  };
+
+  shuffleButton.onclick = () => {
+    playTone(600);
+    shufflePuzzle();
+  };
+
+  document.getElementById("back-home").onclick = coverPage;
+
+  shufflePuzzle();
+}
+
+// Start at the cover whenever the website first loads.
+coverPage();
+</script>
+</body>
+</html>
